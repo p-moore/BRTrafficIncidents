@@ -1,0 +1,4 @@
+could categorize crashes by day of the week and see if the number of crashes increases each year or which season has the most crashes
+where the most amount of crashes occur
+
+could be used to help determine which roads should be worked on in the future
