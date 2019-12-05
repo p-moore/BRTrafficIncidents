@@ -21,7 +21,7 @@ print(dataset)
 sorted_by_date = dataset.sort_values(by='CRASH DATE')
 print(sorted_by_date)
 
-time = pd.date_range('1/1/2000', periods=2000, freq='60min')
+#time = pd.date_range('1/1/2000', periods=2000, freq='60min')
 
 #times = pd.DatetimeIndex(dataset['CRASH TIME'].values)
 #grouped = dataset.groupby([times.hour, times.minute])
@@ -31,26 +31,17 @@ time = pd.date_range('1/1/2000', periods=2000, freq='60min')
 #dataset.groupby([times.hour, times.minute]).value_col.sum()
 #print(times)
 
-
-index1 = dataset['GEOLOCATION'][0]
-index2 = dataset['GEOLOCATION'][1]
-split1 = index1.split('\n')
-split2 = index2.split('\n')
-
-
-glocation1 = split1[2]
-glocation2 = split2[2]
-
-glocation3 = (30.522869, -91.180446)
-glocation4 = (30.493052, -91.140585)
-
-print(glocation1)
-print(glocation2)
-
-distance = geodesic(glocation3, glocation4).miles
+# Getting Distance between the first two geo locations
+split1 = dataset['GEOLOCATION'][0].split('\n')[2].split('(')[1].split(', ')
+split2 = dataset['GEOLOCATION'][1].split('\n')[2].split('(')[1].split(', ')
+x1 = Decimal(split1[0])
+x2 = Decimal(split2[0])
+y1 = Decimal(split1[1].split(')')[0])
+y2 = Decimal(split2[1].split(')')[0])
+glocation1 = (x1, y1)
+glocation2 = (x2, y2)
+distance = geodesic(glocation1, glocation2).miles
 print(distance)
-
-#print(split1[2])
 
 # get column 'CRASH DATES'
 dates = dataset.values[:, 1]
@@ -68,11 +59,11 @@ description = dataset.describe()
 #print(description)
 
 # plots data of the crash date and total vehicles
-sorted_by_date.plot(x='CRASH DATE', y='TOT VEH', style='o')
-plt.title('Crash Date by Year')
-plt.xlabel('Crash Date')
+sorted_by_date.plot(x='STREET NAME', y='TOT VEH', style='o')
+plt.title('Most Dangerous Streets')
+plt.xlabel('Street Name')
 plt.ylabel('Total Vehicles')
-#plt.show()
+plt.show()
 
 plt.figure()
 plt.tight_layout()
