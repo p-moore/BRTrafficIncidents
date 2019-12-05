@@ -1,5 +1,6 @@
 import csv
 
+from decimal import Decimal
 import order as order
 import pandas as pd
 import numpy as np
@@ -20,11 +21,36 @@ print(dataset)
 sorted_by_date = dataset.sort_values(by='CRASH DATE')
 print(sorted_by_date)
 
-index = dataset['GEOLOCATION'][0]
-#print(index)
+time = pd.date_range('1/1/2000', periods=2000, freq='60min')
 
-split = index.split('\n')
-print(split[2])
+#times = pd.DatetimeIndex(dataset['CRASH TIME'].values)
+#grouped = dataset.groupby([times.hour, times.minute])
+#print(times)
+
+#times = pd.to_datetime(dataset['CRASH TIME'])
+#dataset.groupby([times.hour, times.minute]).value_col.sum()
+#print(times)
+
+
+index1 = dataset['GEOLOCATION'][0]
+index2 = dataset['GEOLOCATION'][1]
+split1 = index1.split('\n')
+split2 = index2.split('\n')
+
+
+glocation1 = split1[2]
+glocation2 = split2[2]
+
+glocation3 = (30.522869, -91.180446)
+glocation4 = (30.493052, -91.140585)
+
+print(glocation1)
+print(glocation2)
+
+distance = geodesic(glocation3, glocation4).miles
+print(distance)
+
+#print(split1[2])
 
 # get column 'CRASH DATES'
 dates = dataset.values[:, 1]
